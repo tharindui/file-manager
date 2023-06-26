@@ -1,31 +1,36 @@
 import constate from "constate";
-import { getMutation } from "./_shared/query-helper";
+import { getMutation, getQueries } from "./_shared/query-helper";
+
+export const [useGetFiles] = getQueries(
+  "files.getFiles",
+  async (api) => {
+    const data = await api.get<any>(`/Title`);
+    return {
+      data,
+    };
+  },
+  {
+    useErrorBoundary: true,
+    retry: false,
+    staleTime: 1000,
+    refetchOnReconnect: false,
+    // refetchOnWindowFocus: true,
+   // hideLoadingBar: true,
+  }
+);
+
 
 const useUserRegisterMutation = getMutation(async (api, data) => {
-  return api.post<any, any>("/Account/register", data);
+  return api.post<any, any>('/Account/register', data);
 });
 
-const useUserLoginMutation = getMutation(async (api, data) => {
-  return api.post<any, any>("/Account/login", data);
-});
-
-export const [AccountProvider, useRegisterUser, useLogin] = constate(
+export const [FileProvider, useFile] = constate(
   () => {
-    const userRegisterMutation = useUserRegisterMutation();
-    const userLoginMutation = useUserLoginMutation();
-    const registerUser = async (params: any) => {
-      await userRegisterMutation.mutateAsync(params);
-    };
-    const UserLogin = async (params: any) => {
-      await userRegisterMutation.mutateAsync(params);
-    };
-
+    const data = useGetFiles();
     return {
-      registerUser,
-      UserLogin,
+      data,
     };
   },
 
-  ({ registerUser }) => registerUser,
-  ({ UserLogin }) => UserLogin
+  ({ data }) => data
 );
