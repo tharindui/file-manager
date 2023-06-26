@@ -15,7 +15,7 @@ class ApiClient {
       headers: {
         ...config?.headers,
       },
-      baseURL: "https://api.github.com/",
+      baseURL: "https://zitles.azurewebsites.net/api/",
       timeout: isServer ? 120 * 1000 : undefined,
     });
   }
