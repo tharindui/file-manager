@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { FileProvider } from "../services/fileService";
+import { AccountProvider } from "../services/accountService";
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
   const defaultTheme = createTheme();
@@ -10,9 +11,11 @@ export default function App({ Component, pageProps }: AppProps) {
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
       <QueryClientProvider client={queryClient}>
-        <FileProvider>
-          <Component {...pageProps} />
-        </FileProvider>
+        <AccountProvider>
+          <FileProvider>
+            <Component {...pageProps} />
+          </FileProvider>
+        </AccountProvider>
       </QueryClientProvider>
     </ThemeProvider>
   );
