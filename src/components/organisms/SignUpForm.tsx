@@ -9,14 +9,24 @@ import FormCheckboxInput from "../atoms/formInputs/FormCheckboxInput ";
 import FormTextField from "../atoms/formInputs/FormTextField";
 import AvatarIcon from "../molecules/AvatarIcon ";
 import Copyright from "../molecules/Copyright";
+import { useRegisterUser } from "@/src/services/accountService";
 
 const SignUpForm = () => {
+  const registerUser = useRegisterUser();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
     console.log({
       email: data.get("email"),
       password: data.get("password"),
+    });
+
+    registerUser({
+      email: data.get("email"),
+      password: data.get("password"),
+      displayName: data.get("firstName"),
+      userName: data.get("firstName"),
     });
   };
 
