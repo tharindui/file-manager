@@ -114,13 +114,12 @@ export default function DrawerAppBar(props: Props) {
       <Box component="main" sx={{ p: 3 }}>
         <Toolbar />
         <Typography>
-          <div>
-            <h1>{data?.data.name}</h1>
-            <p>{data?.data.description}</p>
-            <strong>👀 {data?.data.subscribers_count}</strong>{" "}
-            <strong>✨ {data?.data.stargazers_count}</strong>{" "}
-            <strong>🍴 {data?.data.forks_count}</strong>
-          </div>
+          {data?.data.map((data, index) => (
+            <div key={data.id}>
+              <h1>{data.name}</h1>
+              <p>{data.tags}</p>
+            </div>
+          ))}
         </Typography>
       </Box>
     </Box>
